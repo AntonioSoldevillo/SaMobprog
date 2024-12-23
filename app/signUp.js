@@ -13,9 +13,8 @@ export default function signUp() {
   const [fullName, setFullName] = useState('');
   const [role, setRole] = useState('Tutee');
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // State for loading
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Handle the sign-up process
   const handleSignUp = async () => {
     setIsLoading(true); // Show loading indicator
     try {
@@ -81,8 +80,8 @@ export default function signUp() {
       }
 
       alert('Account created successfully! You can now log in.');
-      setIsLoading(false); // Hide loading indicator
-      router.push('/login'); // Navigate to login page
+      setIsLoading(false);
+      router.push('/login');
     } catch (error) {
       alert('Something went wrong');
       setIsLoading(false);

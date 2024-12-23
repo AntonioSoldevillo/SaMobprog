@@ -63,7 +63,7 @@ export default function index() {
   
       // Determine where to navigate based on role
       if (tutorData) {
-        router.push('TutorDashboard'); // Tutor dashboard
+        router.push('tutorDashboard'); // Tutor dashboard
       } else {
         router.push('tuteeDashboard'); // Tutee dashboard
       }
