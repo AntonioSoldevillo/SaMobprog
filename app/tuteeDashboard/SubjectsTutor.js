@@ -29,37 +29,37 @@ const SubjectTutorsPage = () => {
     setIsLoading(true);
     setTutors([]);
     setErrorMessage(null);
-
+  
     try {
       const { data: tutorSubjectData, error } = await supabase
         .from('tutor_subjects')
         .select('tutor_id')
         .eq('subject_id', subjectId);
       if (error) throw error;
-
+  
       const tutorIds = tutorSubjectData.map(item => item.tutor_id);
       if (tutorIds.length > 0) {
         const { data: tutorDetails, error: tutorError } = await supabase
           .from('tutors')
-          .select('tutor_id, user_id')
-          .in('tutor_id', tutorIds);
+          .select('tutor_id, user_id') // Remove 'rating' field
         if (tutorError) throw tutorError;
-
+  
         const userIds = tutorDetails.map(item => item.user_id);
         if (userIds.length > 0) {
           const { data: userDetails, error: userError } = await supabase
             .from('users')
             .select('id, full_name, email')
             .in('id', userIds);
-
+  
           if (userError) throw userError;
-
+  
           const formattedTutors = tutorDetails.map((tutor) => ({
             tutor_id: tutor.tutor_id,
             full_name: userDetails.find((user) => user.id === tutor.user_id).full_name,
             email: userDetails.find((user) => user.id === tutor.user_id).email,
+            rating: 0, // Set rating to 0 since there's no rating field
           }));
-
+  
           setTutors(formattedTutors);
         }
       }
@@ -70,6 +70,7 @@ const SubjectTutorsPage = () => {
       setIsLoading(false);
     }
   };
+  
 
   useEffect(() => {
     fetchSubjects();
@@ -78,6 +79,21 @@ const SubjectTutorsPage = () => {
   const filteredSubjects = subjects.filter(subject =>
     subject.subject_name.toLowerCase().includes(searchText.toLowerCase())
   );
+
+  const renderRating = (rating) => {
+    let stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <Ionicons
+          key={i}
+          name={i <= rating ? 'star' : 'star-outline'}
+          size={20}
+          color="#ffcc00"
+        />
+      );
+    }
+    return <View style={styles.ratingContainer}>{stars}</View>;
+  };
 
   return (
     <View style={styles.container}>
@@ -119,6 +135,7 @@ const SubjectTutorsPage = () => {
                 <View key={index} style={styles.tutorCard}>
                   <Text style={styles.tutorName}>{tutor.full_name}</Text>
                   <Text style={styles.tutorEmail}>{tutor.email}</Text>
+                  {renderRating(tutor.rating)} {/* Display rating */}
                   <TouchableOpacity
                     style={styles.viewProfileButton}
                     onPress={() => router.push(`/tutor-profile/${tutor.tutor_id}`)}
@@ -151,7 +168,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
     marginTop: 2,
-    
   },
   backButton: {
     position: 'absolute',
@@ -220,6 +236,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#808080',
     textAlign: 'center',
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginVertical: 5,
   },
   bookButton: {
     marginTop: 10,

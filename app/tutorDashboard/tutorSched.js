@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Alert, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'; 
 import supabase from '../src/supabaseClient';
-import { useRouter } from 'expo-router';
+import { useRouter } from 'expo-router'; // Import useRouter
 
-export default function tutorSched(){
+const TutorSchedule = () => {
   const [schedules, setSchedules] = useState([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter(); // Use the useRouter hook for navigation
+  const router = useRouter(); // Initialize router
 
   // Fetch schedules for the logged-in tutor
   const fetchSchedules = async () => {
@@ -66,10 +66,12 @@ export default function tutorSched(){
     }
   };
 
-  // Navigate to Edit Schedule screen
+  // Navigate to Edit Schedule screen with query parameters
   const handleEdit = (schedule) => {
-    router.push({ pathname: 'EditSchedule', params: { schedule } }); // Use router.push for navigation
+    // Use React Navigation to go to the EditSchedule screen
+    router.push(`/tutorPages/EditSchedule?schedule_id=${schedule.schedule_id}&availability_date_time=${schedule.availability_date_time}`);
   };
+  
 
   // Render a schedule item
   const renderScheduleItem = ({ item }) => (
@@ -121,7 +123,7 @@ export default function tutorSched(){
 
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => router.push('AddSchedule')}
+        onPress={() => router.push('/tutorPages/addSchedule')} // Use router.push here too
       >
         <Text style={styles.addButtonText}>Add Schedule</Text>
       </TouchableOpacity>
@@ -129,13 +131,12 @@ export default function tutorSched(){
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
     backgroundColor: '#f9f9f9',
-    marginTop: 30,
+    marginTop: 1,
   },
   backButton: {
     position: 'absolute',
@@ -148,7 +149,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
-    color:'#003366',
+    color:'#003366'
   },
   scheduleItem: {
     flexDirection: 'row',
@@ -194,3 +195,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+
+export default TutorSchedule;

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router'; 
+import { useRouter } from 'expo-router';
 
 const MessagePage = () => {
   const [messages, setMessages] = useState([]);
-  const router = useRouter(); 
+  const router = useRouter();
 
   useEffect(() => {
     const fetchMessages = () => {
@@ -20,9 +20,9 @@ const MessagePage = () => {
   }, []);
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity 
-      style={styles.messageItem} 
-      onPress={() => router.push(`/messageDetail/${item.id}`)} 
+    <TouchableOpacity
+      style={styles.messageItem}
+      onPress={() => router.push(`/messageDetail/${item.id}`)}
     >
       <View style={styles.messageInfo}>
         <Text style={styles.sender}>{item.from}</Text>
@@ -35,9 +35,14 @@ const MessagePage = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}> 
-          <Ionicons name="arrow-back" size={24} color="#003366" />
-        </TouchableOpacity>
+        {/* Back button with Ionicons */}
+        <Ionicons
+          name="arrow-back"
+          size={24}
+          color="#003366"
+          style={styles.backButton}
+          onPress={() => router.back()} // Simple back navigation
+        />
         <Text style={styles.headerTitle}>Messages</Text>
       </View>
 
@@ -47,8 +52,6 @@ const MessagePage = () => {
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.messageList}
       />
-
-      
     </View>
   );
 };
@@ -58,7 +61,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     paddingTop: 20,
-    marginTop: -5
+    marginTop: -5,
   },
   header: {
     flexDirection: 'row',
@@ -66,11 +69,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginBottom: 15,
   },
+  backButton: {
+    marginRight: 15, // Space between back icon and the title
+  },
   headerTitle: {
+    flex: 1,
     fontSize: 24,
     fontWeight: 'bold',
     color: '#003366',
-    marginLeft: 10,
+    textAlign: 'center',
+    marginLeft:-30
   },
   messageList: {
     paddingHorizontal: 15,
@@ -100,14 +108,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#808080',
     alignSelf: 'flex-end',
-  },
-  bottomNav: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 19,
-    borderTopWidth: 1,
-    borderTopColor: '#f1f1f1',
   },
 });
 

@@ -78,9 +78,12 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   title: {
+    flex:1,
     fontSize: 24,
     fontWeight: 'bold',
     color: '#003366',
+    textAlign:'center',
+    marginLeft:-28
   },
   profileSection: {
     alignItems: 'center',

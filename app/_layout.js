@@ -8,6 +8,16 @@ export default function _layout() {
       <Stack.Screen name="signUp" options={{ headerShown: false }} />
       <Stack.Screen name="tuteeDashboard" options={{ headerShown: false }} />
       <Stack.Screen name="tutorDashboard" options={{ headerShown: false }} />
+      <Stack.Screen name="forgotPassword" options={{ headerShown: false }} /> 
+      <Stack.Screen name="dashboardCards/bookingInfo" options={{ headerShown: false }} />
+      <Stack.Screen name="dashboardCards/Completed" options={{ headerShown: false }} />
+      <Stack.Screen name="dashboardCards/Rejected" options={{ headerShown: false }} />
+      <Stack.Screen name="dashboardCards/TopTutors" options={{ headerShown: false }} />
+      <Stack.Screen name="schedule/[tutorId]" options={{ headerShown: false }} />
+      <Stack.Screen name="tutorPages/addSchedule" options={{ headerShown: false }} />
+      <Stack.Screen name="dashboardCardsTutor/BookingRequest" options={{ headerShown: false }} />
+      <Stack.Screen name="dashboardCardsTutor/Messages" options={{ headerShown: false }} />
+      <Stack.Screen name="dashboardCardsTutor/MySubjects" options={{ headerShown: false }} />
     </Stack>
   );
 }

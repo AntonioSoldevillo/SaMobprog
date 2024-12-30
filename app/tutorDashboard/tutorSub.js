@@ -7,25 +7,24 @@ import {
   TouchableOpacity,
   Alert,
   ScrollView,
-  TextInput, 
+  TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import supabase from '../src/supabaseClient';
 import { useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
 
-export default function tutorSub(){
+export default function tutorSub() {
   const router = useRouter();
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [tutors, setTutors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [tutorId, setTutorId] = useState(null);
-  const [searchQuery, setSearchQuery] = useState(''); 
+  const [searchQuery, setSearchQuery] = useState('');
 
   const subjects = [
     { id: 1000, name: 'Software Engineering' },
     { id: 1001, name: 'Mobile Programming' },
-    { id: 1002, name: 'Technoprenuership' },
+    { id: 1002, name: 'Technopreneurship' },
     { id: 1003, name: 'Internet of Things' },
   ];
 
@@ -58,40 +57,6 @@ export default function tutorSub(){
     fetchTutorId();
   }, []);
 
-  const fetchTutors = async (subjectId) => {
-    setIsLoading(true);
-    setTutors([]);
-    setSelectedSubject(subjects.find((subject) => subject.id === subjectId));
-
-    try {
-      const { data, error } = await supabase
-        .from('tutor_subjects')
-        .select(`
-          tutors (
-            user_id,
-            users (
-              full_name,
-              email
-            )
-          )
-        `)
-        .eq('subject_id', subjectId);
-
-      if (error) throw error;
-
-      const formattedTutors = data.map((entry) => ({
-        fullName: entry.tutors.users.full_name,
-        email: entry.tutors.users.email,
-      }));
-
-      setTutors(formattedTutors);
-    } catch (error) {
-      console.error('Error fetching tutors:', error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const enrollInSubject = async (subjectId) => {
     if (!tutorId) {
       Alert.alert('Error', 'You must be logged in as a tutor to enroll.');
@@ -119,7 +84,6 @@ export default function tutorSub(){
     }
   };
 
-  // Filtered subjects based on search query
   const filteredSubjects = subjects.filter((subject) =>
     subject.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -128,10 +92,10 @@ export default function tutorSub(){
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => router.back()}>
+        <TouchableOpacity style={{ padding: 10 }} onPress={() => router.back()}>
           <Icon name="arrow-back" size={24} color="#003366" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Subjects</Text>
+        <Text style={styles.headerTitle}>Enroll Subjects</Text>
       </View>
 
       {/* Search Bar */}
@@ -177,42 +141,30 @@ export default function tutorSub(){
           </TouchableOpacity>
         </View>
       )}
-
-      {/* Tutors List */}
-      {tutors.length > 0 && (
-        <ScrollView style={styles.tutorsContainer}>
-          <Text style={styles.selectedSubjectTitle}>Tutors Enrolled:</Text>
-          {tutors.map((tutor, index) => (
-            <View key={index} style={styles.tutorCard}>
-              <Text style={styles.tutorName}>{tutor.fullName}</Text>
-              <Text style={styles.tutorEmail}>{tutor.email}</Text>
-            </View>
-          ))}
-        </ScrollView>
-      )}
-
-      
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    backgroundColor: '#fff', 
-    padding: 20, 
-    paddingTop: 30 
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    padding: 20,
+    paddingTop: 10,
   },
-  headerContainer: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    paddingVertical: 10 
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+    marginBottom: 20,
   },
-  headerTitle: { 
-    fontSize: 24, 
-    fontWeight: 'bold', 
-    marginLeft: -200, 
-    color: '#003366' 
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    flex: 1,
+    textAlign: 'center',
+    color: '#003366',
+    marginRight:30
   },
   searchBar: {
     height: 50,
@@ -222,9 +174,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginBottom: 10,
   },
-  subjectsContainer: { 
-    flex: 1, 
-    marginBottom: 20 
+  subjectsContainer: {
+    flex: 1,
+    marginBottom: 20,
   },
   subjectButton: {
     backgroundColor: '#003366',
@@ -242,50 +194,24 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#FFC700',
   },
-  enrollmentContainer: { 
-    position: 'absolute', 
-    top: 570, 
-    left: 0,
-    right: 0,
+  enrollmentContainer: {
     alignItems: 'center',
   },
-  enrollButton: { 
-    backgroundColor: '#FFC700', 
-    padding: 15, 
-    paddingHorizontal: 100, 
-    borderRadius: 10 
+  enrollButton: {
+    backgroundColor: '#FFC700',
+    padding: 15,
+    paddingHorizontal: 100,
+    borderRadius: 10,
   },
-  enrollButtonText: { 
-    color: '#000', 
-    fontSize: 16, 
-    textAlign: 'center' 
+  enrollButtonText: {
+    color: '#000',
+    fontSize: 16,
+    textAlign: 'center',
   },
   selectedSubjectTitle: {
-    marginBottom: 10
-  },
-  tutorsContainer: { 
-    marginTop: 20 
-  },
-  tutorCard: { 
-    padding: 10, 
-    backgroundColor: '#f9f9f9', 
-    marginBottom: 10 
-  },
-  tutorName: { 
-    fontSize: 16, 
-    fontWeight: 'bold' 
-  },
-  tutorEmail: { 
-    fontSize: 14, 
-    color: '#555' 
-  },
-  bottomNav: { 
-    flexDirection: 'row', 
-    justifyContent: 'space-between', 
-    alignItems: 'center', 
-    padding: 10, 
-    borderTopWidth: 1, 
-    borderTopColor: '#f1f1f1' 
+    marginBottom: 10,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
-

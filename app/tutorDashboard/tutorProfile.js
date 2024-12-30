@@ -1,10 +1,105 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; 
 import { useRouter } from 'expo-router';
+import * as ImagePicker from 'expo-image-picker'; // Use Expo Image Picker for permissions and picking
+import supabase from '../src/supabaseClient'; // Make sure to import your Supabase client
 
 export default function TutorProfile() {
+  const [profileImage, setProfileImage] = useState(null);
+  const [userInfo, setUserInfo] = useState({}); // For storing user info
   const router = useRouter();
+
+  // Default image URL
+  const defaultProfileImage = require('../pics/oliver.png');
+
+  // Fetch user profile picture from Supabase
+  const fetchUserProfile = async () => {
+    const user = supabase.auth.user(); // Get the current logged-in user
+    if (user) {
+      try {
+        const { data, error } = await supabase
+          .from('profile_pics')
+          .select('image_url')
+          .eq('user_id', user.id)
+          .single();
+
+        if (data && data.image_url) {
+          setProfileImage({ uri: data.image_url }); // Set the image URL from Supabase
+        } else {
+          setProfileImage(defaultProfileImage); // Set default image if no profile picture exists
+        }
+      } catch (error) {
+        console.error("Error fetching profile image:", error);
+      }
+    }
+  };
+
+  // Request permission for image picker
+  const requestPermissions = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      alert('Sorry, we need camera roll permissions to upload your profile image!');
+    }
+  };
+
+  // Handle image picking and uploading to Supabase
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 1,
+      allowsEditing: true,
+      aspect: [1, 1], // Optional: makes the image square
+    });
+
+    if (!result.cancelled) {
+      const selectedUri = result.uri;
+      setProfileImage({ uri: selectedUri }); // Temporarily set selected image
+
+      // Upload image to Supabase storage
+      const user = supabase.auth.user();
+      if (user) {
+        const fileExt = selectedUri.split('.').pop();
+        const fileName = `${user.id}_profile.${fileExt}`;
+
+        const { data, error: uploadError } = await supabase.storage
+          .from('profile_pics') // 'profile_pics' is your Supabase storage bucket
+          .upload(fileName, selectedUri, {
+            contentType: 'image/*',
+          });
+
+        if (uploadError) {
+          console.error("Error uploading image:", uploadError);
+          return;
+        }
+
+        // Get the uploaded image URL
+        const imageUrl = supabase.storage
+          .from('profile_pics')
+          .getPublicUrl(fileName).publicURL;
+
+        // Save the image URL in the 'profile_pics' table
+        const { error: insertError } = await supabase
+          .from('profile_pics')
+          .upsert({
+            user_id: user.id,
+            image_url: imageUrl,
+          });
+
+        if (insertError) {
+          console.error("Error saving image URL:", insertError);
+        } else {
+          // Update profile image after successful upload
+          setProfileImage({ uri: imageUrl });
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    requestPermissions(); // Request permissions when the component mounts
+    fetchUserProfile(); // Fetch the user's profile picture
+  }, []);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -17,9 +112,16 @@ export default function TutorProfile() {
         </View>
 
         <View style={styles.profileContainer}>
-          <Image source={require('../pics/oliver.png')} style={styles.profileImage} />
+          <TouchableOpacity onPress={pickImage}>
+            <Image source={profileImage || defaultProfileImage} style={styles.profileImage} />
+          </TouchableOpacity>
           <Text style={styles.name}>Oliver Smith</Text>
           <Text style={styles.subject}>Math Tutor</Text>
+          
+          {/* Upload Profile Button */}
+          <TouchableOpacity style={styles.uploadButton} onPress={pickImage}>
+            <Text style={styles.uploadButtonText}>Upload Profile</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.detailsContainer}>
@@ -43,8 +145,6 @@ export default function TutorProfile() {
           </View>
         </View>
       </ScrollView>
-
-      
     </SafeAreaView>
   );
 }
@@ -56,7 +156,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     paddingBottom: 100, 
-    marginTop: 30
+    marginTop: 5
   },
   header: {
     flexDirection: 'row',
@@ -66,7 +166,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginLeft: 10,
+    marginLeft: 112,
     color:'#003366',
   },
   profileContainer: {
@@ -94,6 +194,18 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'gray',
   },
+  uploadButton: {
+    marginTop: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: '#003366',
+    borderRadius: 5,
+  },
+  uploadButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   detailsContainer: {
     marginTop: 20,
   },
@@ -114,18 +226,5 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     color: 'gray',
-  },
-  bottomNav: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 15,
-    backgroundColor: 'white',
-    borderTopWidth: 1,
-    borderTopColor: '#f1f1f1',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
   },
 });

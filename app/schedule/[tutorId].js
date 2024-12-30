@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, FlatList, TouchableOpacity, Alert } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons'; // For back arrow icon
 import supabase from '../src/supabaseClient';
+import { useRouter } from 'expo-router'; // Correct import for expo-router
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const SchedulePage = () => {
   const navigation = useNavigation();
@@ -9,6 +11,7 @@ const SchedulePage = () => {
   const { tutorId } = route.params; // Access tutorId from route.params
   const [schedules, setSchedules] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter(); // Initialize router
 
   // Fetch schedules for the tutor
   const fetchSchedules = async () => {
@@ -31,14 +34,14 @@ const SchedulePage = () => {
 
           if (bookingError) {
             console.error('Error checking booking status:', bookingError.message);
-            return { ...schedule, status: 'available' }; 
+            return { ...schedule, status: 'available' };
           }
 
-          return { ...schedule, status: 'booked' }; 
+          return { ...schedule, status: 'booked' };
         })
       );
 
-      setSchedules(schedulesWithStatus); 
+      setSchedules(schedulesWithStatus);
     } catch (error) {
       console.error('Error fetching schedules:', error.message);
     } finally {
@@ -95,8 +98,7 @@ const SchedulePage = () => {
         return [];
       }
 
-      const subjectIds = data.map((entry) => entry.subject_id); // Collect all subject_ids
-      console.log('Fetched Subject IDs:', subjectIds);
+      const subjectIds = data.map((entry) => entry.subject_id);
       return subjectIds;
     } catch (err) {
       console.error('Error in fetchSubjectIds:', err.message);
@@ -107,14 +109,12 @@ const SchedulePage = () => {
 
   // Handle booking a slot
   const handleBooking = async (scheduleId, availabilityDateTime) => {
-    console.log('Booking button pressed');
-
     const tuteeId = await fetchTuteeId();
-    const subjectIds = await fetchSubjectIds(); 
+    const subjectIds = await fetchSubjectIds();
 
     if (!tuteeId || subjectIds.length === 0) return;
 
-    const subjectId = subjectIds[0]; 
+    const subjectId = subjectIds[0];
 
     try {
       const { data, error } = await supabase
@@ -127,14 +127,12 @@ const SchedulePage = () => {
           booking_date_time: availabilityDateTime,
         }]);
 
-
       if (error) {
         Alert.alert('Error', 'Failed to book the slot.');
         console.error('Insert Error:', error.message);
       } else {
         Alert.alert('Success', 'Your booking has been confirmed!');
-        console.log('Booking Data:', data); 
-        navigation.navigate('Dashboard'); // Navigate to Dashboard
+        router.push('/tuteeDashboard/Dashboard');  // Correct navigation using expo-router
       }
     } catch (err) {
       Alert.alert('Error', 'An unexpected error occurred.');
@@ -150,6 +148,14 @@ const SchedulePage = () => {
 
   return (
     <View style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Ionicons name="arrow-back" size={24} color="#003366" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Book a Slot</Text>
+      </View>
+
       {isLoading ? (
         <ActivityIndicator size="large" color="#003366" />
       ) : schedules.length > 0 ? (
@@ -186,7 +192,23 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 20,
-    marginTop: -10,
+    marginTop: 2,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  backButton: {
+    marginRight: 10,
+  },
+  headerTitle: {
+    flex: 1,
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#003366',
+    textAlign: 'center',
+    marginLeft: -25,
   },
   scheduleCard: {
     padding: 15,

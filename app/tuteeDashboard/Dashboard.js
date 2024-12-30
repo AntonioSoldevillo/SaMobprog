@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
 import { MaterialIcons, Ionicons, FontAwesome } from '@expo/vector-icons';
-import supabase from '../src/supabaseClient'; 
+import { useRouter } from 'expo-router'; // Import useRouter
+import supabase from '../src/supabaseClient';
 
-const Dashboard = ({ navigation }) => {
+const Dashboard = () => {
   const [userName, setUserName] = useState('');
+  const router = useRouter(); // Initialize useRouter
 
   // Fetch user name
   useEffect(() => {
@@ -59,7 +61,7 @@ const Dashboard = ({ navigation }) => {
       <View style={styles.cardsContainer}>
         {/* First Row of Cards */}
         <View style={styles.cardRow}>
-          <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('BookingsInfo')}>
+          <TouchableOpacity style={styles.card} onPress={() => router.push('/dashboardCards/bookingInfo')}>
             <MaterialIcons name="pending-actions" size={32} color="#003366" />
             <View style={styles.cardText}>
               <Text style={styles.cardTitle}>Bookings</Text>
@@ -67,35 +69,34 @@ const Dashboard = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.card}>
-            <MaterialIcons name="check-circle-outline" size={32} color="#003366" />
-            <View style={styles.cardText}>
-              <Text style={styles.cardTitle}>Completed</Text>
-              <Text style={styles.cardCount}>5</Text>
-            </View>
-          </TouchableOpacity>
+          <TouchableOpacity style={styles.card} onPress={() => router.push('/dashboardCards/Completed')}>
+  <MaterialIcons name="check-circle-outline" size={32} color="#003366" />
+  <View style={styles.cardText}>
+    <Text style={styles.cardTitle}>Completed</Text>
+    <Text style={styles.cardCount}>5</Text>
+  </View>
+</TouchableOpacity>
         </View>
 
         {/* Second Row of Cards */}
         <View style={styles.cardRow}>
-          <TouchableOpacity style={styles.card}>
-            <MaterialIcons name="cancel" size={32} color="#003366" />
-            <View style={styles.cardText}>
-              <Text style={styles.cardTitle}>Rejected</Text>
-              <Text style={styles.cardCount}>1</Text>
-            </View>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.card} onPress={() => router.push('/dashboardCards/Rejected')}>
+  <MaterialIcons name="cancel" size={32} color="#003366" />
+  <View style={styles.cardText}>
+    <Text style={styles.cardTitle}>Rejected</Text>
+    <Text style={styles.cardCount}>1</Text>
+  </View>
+</TouchableOpacity>
 
-          <TouchableOpacity style={styles.card}>
-            <FontAwesome name="line-chart" size={32} color="#003366" />
-            <View style={styles.cardText}>
-              <Text style={styles.cardTitle}>Top Tutors</Text>
-              <Text style={styles.cardCount}>10+</Text>
-            </View>
-          </TouchableOpacity>
+<TouchableOpacity style={styles.card} onPress={() => router.push('/dashboardCards/TopTutors')}>
+  <FontAwesome name="line-chart" size={32} color="#003366" />
+  <View style={styles.cardText}>
+    <Text style={styles.cardTitle}>Top Tutors</Text>
+    <Text style={styles.cardCount}>10+</Text>
+  </View>
+</TouchableOpacity>
         </View>
       </View>
-
     </View>
   );
 };
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
     justifyContent: 'space-between',
-    marginTop: -20
+    marginTop: -20,
   },
   header: {
     flexDirection: 'row',
@@ -201,14 +202,6 @@ const styles = StyleSheet.create({
   cardCount: {
     fontSize: 16,
     color: '#003366',
-  },
-  bottomNav: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 9,
-    borderTopWidth: 1,
-    borderTopColor: '#f1f1f1',
   },
 });
 

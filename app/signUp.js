@@ -81,7 +81,7 @@ export default function signUp() {
 
       alert('Account created successfully! You can now log in.');
       setIsLoading(false);
-      router.push('/login');
+      router.push('/');
     } catch (error) {
       alert('Something went wrong');
       setIsLoading(false);
@@ -97,6 +97,12 @@ export default function signUp() {
         value={fullName}
         onChangeText={setFullName}
         style={styles.input}
+        theme={{
+        colors: {
+          primary: '#003366', 
+          underlineColor: 'transparent', 
+        }}
+        }
       />
 
       <TextInput
@@ -105,6 +111,12 @@ export default function signUp() {
         onChangeText={setEmail}
         style={styles.input}
         keyboardType="email-address"
+        theme={{
+        colors: {
+          primary: '#003366', 
+          underlineColor: 'transparent', 
+        }}
+        }
       />
 
       <View style={styles.passwordContainer}>
@@ -114,6 +126,12 @@ export default function signUp() {
           onChangeText={setPassword}
           style={styles.input}
           secureTextEntry={!passwordVisible}
+          theme={{
+        colors: {
+          primary: '#003366', 
+          underlineColor: 'transparent', 
+        }}
+        }
         />
         <Ionicons
           name={passwordVisible ? 'eye-off-outline' : 'eye-outline'}
@@ -142,8 +160,12 @@ export default function signUp() {
 
       <Button
         mode="text"
-        onPress={() => router.push('Login')}
-        style={styles.loginButton}
+        onPress={() => router.push('/')}
+        style={styles.loginButton} theme={{
+            colors: {
+              primary: '#003366',
+            }
+          }}
       >
         Already have an account? Login
       </Button>

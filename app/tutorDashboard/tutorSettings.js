@@ -21,7 +21,7 @@ export default function tutorSettings(){
           text: "OK", 
           onPress: async () => {
             await supabase.auth.signOut();
-            router.push('/login'); // Use router.push() for navigation
+            router.push('/'); // Use router.push() for navigation
           }
         }
       ]
@@ -106,6 +106,7 @@ export default function tutorSettings(){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop:-40
   },
   lightContainer: {
     backgroundColor: '#fff',
