@@ -6,6 +6,7 @@ import SchedulePage from './app/schedule/[tutorId]';
 import Dashboard from './app/tuteeDashboard/Dashboard';
 
 
+
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -22,7 +23,7 @@ export default function App() {
           component={Dashboard}
           options={{ headerShown: false }}  
         />
-        
+      
         
       
        

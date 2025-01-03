@@ -18,6 +18,7 @@ export default function _layout() {
       <Stack.Screen name="dashboardCardsTutor/BookingRequest" options={{ headerShown: false }} />
       <Stack.Screen name="dashboardCardsTutor/Messages" options={{ headerShown: false }} />
       <Stack.Screen name="dashboardCardsTutor/MySubjects" options={{ headerShown: false }} />
+      <Stack.Screen name="tutorPages/EditSchedule" options={{ headerShown: false }} />
     </Stack>
   );
 }

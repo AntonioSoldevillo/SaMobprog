@@ -68,9 +68,12 @@ const TutorSchedule = () => {
 
   // Navigate to Edit Schedule screen with query parameters
   const handleEdit = (schedule) => {
-    // Use React Navigation to go to the EditSchedule screen
-    router.push(`/tutorPages/EditSchedule?schedule_id=${schedule.schedule_id}&availability_date_time=${schedule.availability_date_time}`);
+    const formattedDateTime = encodeURIComponent(schedule.availability_date_time);
+  
+    // Adjust path to navigate to tutorPages/EditSchedule.js
+    router.push(`/tutorPages/EditSchedule?schedule_id=${schedule.schedule_id}&availability_date_time=${formattedDateTime}`);
   };
+  
   
 
   // Render a schedule item
