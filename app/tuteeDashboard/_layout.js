@@ -8,7 +8,7 @@ export default function TabLayout() {
         name="Dashboard"
         options={{
           tabBarIcon: () => <Ionicons name="home-outline" size={24} color="#003366" />,
-          tabBarLabel: '',  // Hide the tab label (name)
+          tabBarLabel: '',  
           headerShown: false,
         }}
       />
@@ -16,7 +16,7 @@ export default function TabLayout() {
         name="Profile"
         options={{
           tabBarIcon: () => <Ionicons name="person-outline" size={24} color="#003366" />,
-          tabBarLabel: '',  // Hide the tab label (name)
+          tabBarLabel: '',  
           headerShown: false,
         }}
       />
@@ -24,16 +24,16 @@ export default function TabLayout() {
         name="SubjectsTutor"
         options={{
           tabBarIcon: () => <Ionicons name="book-outline" size={24} color="#003366" />,
-          tabBarLabel: '',  // Hide the tab label (name)
+          tabBarLabel: '',  
           headerShown: false, 
-          title: "Subjects", // Keep the title for internal use if needed
+          title: "Subjects", 
         }}
       />
       <Tabs.Screen
         name="Message"
         options={{
           tabBarIcon: () => <Ionicons name="chatbubble-outline" size={24} color="#003366" />,
-          tabBarLabel: '',  // Hide the tab label (name)
+          tabBarLabel: '',  
           headerShown: false, 
         }}
       />
@@ -41,7 +41,7 @@ export default function TabLayout() {
         name="Settings"
         options={{
           tabBarIcon: () => <Ionicons name="settings-outline" size={24} color="#003366" />,
-          tabBarLabel: '',  // Hide the tab label (name)
+          tabBarLabel: '',  
           headerShown: false, 
         }}
       />

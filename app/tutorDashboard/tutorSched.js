@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Alert, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'; 
 import supabase from '../src/supabaseClient';
-import { useRouter } from 'expo-router'; // Import useRouter
+import { useRouter } from 'expo-router'; 
 
 const TutorSchedule = () => {
   const [schedules, setSchedules] = useState([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter(); // Initialize router
+  const router = useRouter(); 
 
-  // Fetch schedules for the logged-in tutor
+  
   const fetchSchedules = async () => {
     setLoading(true); 
     try {
@@ -18,7 +18,7 @@ const TutorSchedule = () => {
       if (userError) throw new Error('Failed to retrieve logged-in user');
       if (!user) throw new Error('No user logged in');
 
-      // Fetch the tutor_id using the user.id
+  
       const { data: tutorData, error: tutorError } = await supabase
         .from('tutors')
         .select('tutor_id')
@@ -40,7 +40,7 @@ const TutorSchedule = () => {
       console.error('Error fetching schedules:', err.message);
       Alert.alert('Error', err.message);
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false); 
     }
   };
 
@@ -59,32 +59,32 @@ const TutorSchedule = () => {
       if (error) throw new Error('Failed to delete schedule');
 
       Alert.alert('Success', 'Schedule deleted successfully');
-      fetchSchedules(); // Refresh the schedules list
+      fetchSchedules(); 
     } catch (err) {
       console.error('Error deleting schedule:', err.message);
       Alert.alert('Error', err.message);
     }
   };
 
-  // Navigate to Edit Schedule screen with query parameters
+  
   const handleEdit = (schedule) => {
     const formattedDateTime = encodeURIComponent(schedule.availability_date_time);
   
-    // Adjust path to navigate to tutorPages/EditSchedule.js
+   
     router.push(`/tutorPages/EditSchedule?schedule_id=${schedule.schedule_id}&availability_date_time=${formattedDateTime}`);
   };
   
   
 
-  // Render a schedule item
+
   const renderScheduleItem = ({ item }) => (
     <View style={styles.scheduleItem}>
       <Text style={styles.scheduleText}>
-        {new Date(item.availability_date_time).toLocaleString()} {/* Format the date */}
+        {new Date(item.availability_date_time).toLocaleString()} 
       </Text>
 
       <View style={styles.buttonContainer}>
-        {/* Edit Button */}
+       
         <TouchableOpacity
           style={styles.editButton}
           onPress={() => handleEdit(item)}
@@ -92,7 +92,7 @@ const TutorSchedule = () => {
           <Text style={styles.buttonText}>Edit</Text>
         </TouchableOpacity>
 
-        {/* Delete Button */}
+       
         <TouchableOpacity
           style={styles.deleteButton}
           onPress={() => handleDelete(item.schedule_id)}
@@ -105,7 +105,7 @@ const TutorSchedule = () => {
 
   return (
     <View style={styles.container}>
-      {/* Back Arrow Icon */}
+      
       <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
         <Icon name="arrow-back" size={30} color="#003366" />
       </TouchableOpacity>
@@ -126,7 +126,7 @@ const TutorSchedule = () => {
 
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => router.push('/tutorPages/addSchedule')} // Use router.push here too
+        onPress={() => router.push('/tutorPages/addSchedule')} 
       >
         <Text style={styles.addButtonText}>Add Schedule</Text>
       </TouchableOpacity>

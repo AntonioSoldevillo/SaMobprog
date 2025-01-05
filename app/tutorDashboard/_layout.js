@@ -8,8 +8,8 @@ export default function _layout() {
         name="TutorDash"
         options={{
           tabBarIcon: () => <Ionicons name="home-outline" size={24} color="#003366" />,
-          tabBarLabel: '',  // Hide the tab label (name)
-          headerShown: false,  // Hide the header
+          tabBarLabel: '',  
+          headerShown: false, 
         }}
       />
       
@@ -17,8 +17,8 @@ export default function _layout() {
         name="tutorProfile"
         options={{
           tabBarIcon: () => <Ionicons name="person-outline" size={24} color="#003366" />,
-          tabBarLabel: '',  // Hide the tab label (name)
-          headerShown: false,  // Hide the header
+          tabBarLabel: '',  
+          headerShown: false,  
         }}
       />
       
@@ -26,8 +26,8 @@ export default function _layout() {
         name="tutorSched"
         options={{
           tabBarIcon: () => <Ionicons name="calendar-outline" size={24} color="#003366" />,
-          tabBarLabel: '',  // Hide the tab label (name)
-          headerShown: false,  // Hide the header
+          tabBarLabel: '',  
+          headerShown: false,  
         }}
       />
       
@@ -35,8 +35,8 @@ export default function _layout() {
         name="tutorSub"
         options={{
           tabBarIcon: () => <Ionicons name="book-outline" size={24} color="#003366" />,
-          tabBarLabel: '',  // Hide the tab label (name)
-          headerShown: false,  // Hide the header
+          tabBarLabel: '',  
+          headerShown: false,  
         }}
       />
       
@@ -44,8 +44,8 @@ export default function _layout() {
         name="tutorSettings"
         options={{
           tabBarIcon: () => <Ionicons name="settings-outline" size={24} color="#003366" />,
-          tabBarLabel: '',  // Hide the tab label (name)
-          headerShown: false,  // Hide the header
+          tabBarLabel: '',  
+          headerShown: false,  
         }}
       />
     </Tabs>

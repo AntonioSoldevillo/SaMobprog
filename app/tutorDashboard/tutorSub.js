@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ActivityIndicator,
-  TouchableOpacity,
-  Alert,
-  ScrollView,
-  TextInput,
-} from 'react-native';
+import { View,Text, StyleSheet, ActivityIndicator, TouchableOpacity, Alert, ScrollView, TextInput,} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import supabase from '../src/supabaseClient';
 import { useRouter } from 'expo-router';
@@ -90,7 +81,7 @@ export default function tutorSub() {
 
   return (
     <View style={styles.container}>
-      {/* Header */}
+    
       <View style={styles.headerContainer}>
         <TouchableOpacity style={{ padding: 10 }} onPress={() => router.back()}>
           <Icon name="arrow-back" size={24} color="#003366" />
@@ -98,7 +89,7 @@ export default function tutorSub() {
         <Text style={styles.headerTitle}>Enroll Subjects</Text>
       </View>
 
-      {/* Search Bar */}
+     
       <TextInput
         style={styles.searchBar}
         placeholder="Search subjects..."
@@ -106,7 +97,7 @@ export default function tutorSub() {
         onChangeText={setSearchQuery}
       />
 
-      {/* Subject Buttons */}
+     
       <ScrollView style={styles.subjectsContainer}>
         {filteredSubjects.map((subject) => (
           <TouchableOpacity
@@ -122,7 +113,7 @@ export default function tutorSub() {
         ))}
       </ScrollView>
 
-      {/* Enrollment Section */}
+      
       {selectedSubject && (
         <View style={styles.enrollmentContainer}>
           <Text style={styles.selectedSubjectTitle}>

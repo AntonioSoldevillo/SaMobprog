@@ -4,7 +4,7 @@ import supabase from '../src/supabaseClient';
 import { Calendar } from 'react-native-calendars';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Ionicons } from '@expo/vector-icons'; 
-import { useRouter } from 'expo-router'; // Import useRouter hook
+import { useRouter } from 'expo-router'; 
 
 const Schedule = ({ route }) => {
   const [selectedDate, setSelectedDate] = useState('');
@@ -13,10 +13,10 @@ const Schedule = ({ route }) => {
   const [error, setError] = useState(null);
   const [scheduleId, setScheduleId] = useState(route?.params?.scheduleId || null); 
   const [currentSchedule, setCurrentSchedule] = useState(null);
-  const [showSuccessModal, setShowSuccessModal] = useState(false); // State for the success modal
-  const router = useRouter(); // Use the useRouter hook for navigation
+  const [showSuccessModal, setShowSuccessModal] = useState(false); 
+  const router = useRouter(); 
 
-  // Fetch schedule data if scheduleId exists
+  
   useEffect(() => {
     if (scheduleId) {
       fetchScheduleData(scheduleId);
@@ -39,8 +39,8 @@ const Schedule = ({ route }) => {
 
       if (data) {
         const scheduleDateTime = new Date(data.availability_date_time);
-        setSelectedDate(scheduleDateTime.toISOString().split('T')[0]); // Set date in YYYY-MM-DD format
-        setSelectedTime(scheduleDateTime); // Set time for the time picker
+        setSelectedDate(scheduleDateTime.toISOString().split('T')[0]); 
+        setSelectedTime(scheduleDateTime); 
         setCurrentSchedule(data);
       }
     } catch (err) {
@@ -55,7 +55,7 @@ const Schedule = ({ route }) => {
 
   // Handle time change from datetime picker
   const handleTimeChange = (event, selectedDate) => {
-    setShowTimePicker(Platform.OS === 'ios' ? true : false); // Hide time picker on iOS after selection
+    setShowTimePicker(Platform.OS === 'ios' ? true : false); 
     if (selectedDate) {
       setSelectedTime(selectedDate);
     }
@@ -78,8 +78,8 @@ const Schedule = ({ route }) => {
     localDateTime.setMinutes(minutes);
     
     // Adjust the local time to UTC by getting the time zone offset in minutes
-    const timeZoneOffset = localDateTime.getTimezoneOffset(); // returns the offset in minutes
-    localDateTime.setMinutes(localDateTime.getMinutes() - timeZoneOffset); // Adjust by offset
+    const timeZoneOffset = localDateTime.getTimezoneOffset(); 
+    localDateTime.setMinutes(localDateTime.getMinutes() - timeZoneOffset); 
   
     const availabilityDateTime = localDateTime.toISOString(); 
    
@@ -96,7 +96,7 @@ const Schedule = ({ route }) => {
         return;
       }
   
-      // Fetch the tutor_id from the tutors table using the user.id
+      // Fetch the tutor_id 
       const { data: tutorData, error: tutorError } = await supabase
         .from('tutors')
         .select('tutor_id')
@@ -118,19 +118,19 @@ const Schedule = ({ route }) => {
         if (error) {
           setError('Error updating schedule: ' + error.message);
         } else {
-          setShowSuccessModal(true); // Show success modal after updating
+          setShowSuccessModal(true); 
         }
       } else {
         // If creating, insert the schedule into the schedule table
         const { data, error } = await supabase.from('schedule').insert([{
-          tutor_id: tutorData.tutor_id, // Use the retrieved tutor_id
-          availability_date_time: availabilityDateTime, // Store as UTC
+          tutor_id: tutorData.tutor_id, 
+          availability_date_time: availabilityDateTime, 
         }]);
   
         if (error) {
           setError('Error creating schedule: ' + error.message);
         } else {
-          setShowSuccessModal(true); // Show success modal after creating
+          setShowSuccessModal(true); 
         }
       }
     } catch (err) {
@@ -140,20 +140,20 @@ const Schedule = ({ route }) => {
 
   // Handle closing the success modal and navigate back to dashboard
   const handleCloseModal = () => {
-    setShowSuccessModal(false); // Close the modal
-    router.push('/tutorDashboard/TutorDash'); // Navigate to the dashboard
+    setShowSuccessModal(false); 
+    router.push('/tutorDashboard/TutorDash'); 
   };
 
   return (
     <View style={styles.container}>
-      {/* Back Button */}
+     
       <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
         <Ionicons name="arrow-back" size={24} color="#003366" />
       </TouchableOpacity>
 
       <Text style={styles.title}>{scheduleId ? 'Edit Schedule' : 'Create a New Schedule'}</Text>
 
-      {/* Calendar to select a date */}
+      
       <Calendar
         onDayPress={handleDateSelect}
         markedDates={{
@@ -161,7 +161,7 @@ const Schedule = ({ route }) => {
         }}
       />
 
-      {/* Time Picker */}
+      
       <TouchableOpacity
         style={[styles.button, { marginTop: 20 }]}
         onPress={() => setShowTimePicker(true)}
@@ -179,12 +179,12 @@ const Schedule = ({ route }) => {
 
       {error && <Text style={styles.error}>{error}</Text>}
 
-      {/* Save Schedule Button */}
+      
       <TouchableOpacity style={[styles.button, { marginTop: 15 }]} onPress={handleSubmit}>
         <Text style={styles.buttonText}>{scheduleId ? 'Update Schedule' : 'Save Schedule'}</Text>
       </TouchableOpacity>
 
-      {/* Success Modal */}
+     
       <Modal
         transparent={true}
         visible={showSuccessModal}

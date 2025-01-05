@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 const Completed = () => {
   const navigation = useNavigation();
 
-  // Mock data for completed sessions
+ 
   const completedSessions = [
     { title: 'Math Tutorial', date: '2024-12-28' },
     { title: 'Physics Help', date: '2024-12-20' },

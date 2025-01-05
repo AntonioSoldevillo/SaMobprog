@@ -37,59 +37,59 @@ const SettingsPage = () => {
 
   return (
     <View style={[styles.container, isDarkMode ? styles.darkContainer : styles.lightContainer]}>
-      {/* Header with Back Arrow and Title */}
+      
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}> {/* Use router.back() for going back */}
+        <TouchableOpacity onPress={() => router.back()}> 
           <Ionicons name="arrow-back" size={24} color="#003366" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Settings</Text>
       </View>
 
-      {/* Scrollable Content */}
+     
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Language Section */}
+        
         <View style={styles.settingSection}>
           <Text style={styles.optionText}>Language</Text>
           <Ionicons name="chevron-forward" size={20} color="#003366" />
         </View>
 
-        {/* Profile Picture Section */}
+        
         <View style={styles.settingSection}>
           <Text style={styles.optionText}>Profile Picture</Text>
           <Ionicons name="chevron-forward" size={20} color="#003366" />
         </View>
 
-        {/* Account Settings Section */}
+       
         <View style={styles.settingSection}>
           <Text style={styles.optionText}>Account Settings</Text>
           <Ionicons name="chevron-forward" size={20} color="#003366" />
         </View>
 
-        {/* Security Settings Section */}
+        
         <View style={styles.settingSection}>
           <Text style={styles.optionText}>Security</Text>
           <Ionicons name="chevron-forward" size={20} color="#003366" />
         </View>
 
-        {/* Privacy Section */}
+        
         <View style={styles.settingSection}>
           <Text style={styles.optionText}>Privacy</Text>
           <Ionicons name="chevron-forward" size={20} color="#003366" />
         </View>
 
-        {/* Feedback Section */}
+      
         <View style={styles.settingSection}>
           <Text style={styles.optionText}>Feedback</Text>
           <Ionicons name="chevron-forward" size={20} color="#003366" />
         </View>
 
-        {/* Notifications Section */}
+       
         <View style={styles.settingSection}>
           <Text style={styles.optionText}>Notifications</Text>
           <Ionicons name="chevron-forward" size={20} color="#003366" />
         </View>
 
-        {/* Logout Section */}
+        
         <TouchableOpacity style={styles.settingSection} onPress={handleLogout}>
           <Text style={styles.optionText}>Log Out</Text>
           <Ionicons name="chevron-forward" size={20} color="#003366" />
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   scrollContent: {
-    paddingBottom: 100, // Ensure space for the bottom nav
+    paddingBottom: 100, 
   },
   settingSection: {
     flexDirection: 'row',

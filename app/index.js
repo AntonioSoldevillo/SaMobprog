@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button, TextInput, Checkbox } from 'react-native-paper';
-import { Ionicons } from '@expo/vector-icons'; // For eye icon
-import { useRouter } from 'expo-router'; // For navigation
-import supabase from './src/supabaseClient'; // Import supabase client
+import { Ionicons } from '@expo/vector-icons'; 
+import { useRouter } from 'expo-router'; 
+import supabase from './src/supabaseClient'; 
 
 export default function Index() {
-  const router = useRouter(); // Using useRouter for navigation
+  const router = useRouter(); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
-  const [passwordVisible, setPasswordVisible] = useState(false); // To toggle visibility
-  const [errorMessage, setErrorMessage] = useState(null); // To store error messages
+  const [passwordVisible, setPasswordVisible] = useState(false); 
+  const [errorMessage, setErrorMessage] = useState(null); 
 
-  // Handle the login process
+  
   const handleLogin = async () => {
     if (!email || !password) {
       alert('Please enter both email and password');
@@ -55,7 +55,7 @@ export default function Index() {
         .eq('user_id', userId)
         .single();
 
-      if (tutorError && tutorError.code !== 'PGRST116') { // Ignore "no rows found" errors
+      if (tutorError && tutorError.code !== 'PGRST116') { 
         console.error('Error checking tutor role:', tutorError.message);
         setErrorMessage('Error checking tutor role: ' + tutorError.message);
         return;
@@ -63,9 +63,9 @@ export default function Index() {
 
       // Navigate to the respective dashboard based on role
       if (tutorData) {
-        router.push('tutorDashboard'); // Tutor dashboard
+        router.push('tutorDashboard'); 
       } else {
-        router.push('tuteeDashboard'); // Tutee dashboard
+        router.push('tuteeDashboard'); 
       }
     } catch (error) {
       console.error('Unexpected login error:', error);
@@ -76,13 +76,13 @@ export default function Index() {
   return (
     <View style={styles.container}>
       <View style={styles.main}>
-        {/* Book icon as logo */}
+        
         <Ionicons name="book-outline" size={100} color="#003366" style={styles.logo} />
 
-        {/* Title */}
+        
         <Text style={styles.title}>TutorLink</Text>
 
-        {/* Email input */}
+      
         <TextInput
           label="Email address"
           value={email}
@@ -98,13 +98,13 @@ export default function Index() {
           }}
         />
 
-        {/* Password input with visibility toggle */}
+       
         <View style={styles.passwordContainer}>
           <TextInput
             label="Enter password"
             value={password}
             onChangeText={setPassword}
-            secureTextEntry={!passwordVisible} // Toggle secureTextEntry based on state
+            secureTextEntry={!passwordVisible} 
             style={styles.input}
             mode="outlined"
             theme={{
@@ -123,10 +123,10 @@ export default function Index() {
           />
         </View>
 
-        {/* Display error message if login fails */}
+        
         {errorMessage && <Text style={styles.errorText}>{errorMessage}</Text>}
 
-        {/* Remember me checkbox */}
+    
         <View style={styles.rememberMeContainer}>
           <Checkbox
             status={rememberMe ? 'checked' : 'unchecked'}
@@ -135,7 +135,7 @@ export default function Index() {
           <Text style={styles.rememberMeText}>Remember me</Text>
         </View>
 
-        {/* Login button */}
+        
         <Button mode="contained" onPress={handleLogin} style={styles.button} theme={{
           colors: {
             primary: '#003366',
@@ -144,10 +144,10 @@ export default function Index() {
           Login
         </Button>
 
-        {/* Forgot password link */}
+        
         <Button
           mode="text"
-          onPress={() => router.push('/forgotPassword')} // Navigate to forgot password page
+          onPress={() => router.push('/forgotPassword')} 
           style={styles.forgotPasswordButton}
           theme={{
             colors: {
@@ -158,12 +158,12 @@ export default function Index() {
           Forgot Password?
         </Button>
 
-        {/* Sign up link */}
+  
         <View style={styles.signUpContainer}>
           <Text>Don't have an account? </Text>
           <Button
             mode="text"
-            onPress={() => router.push('signUp')}
+            onPress={() => router.replace('signUp')}
             style={styles.signUpButton}
             theme={{
               colors: {
@@ -175,7 +175,7 @@ export default function Index() {
           </Button>
         </View>
 
-        {/* Social media login options */}
+    
         <Text style={styles.orText}>OR</Text>
         <Button
           mode="outlined"
@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: 300,
     borderColor: '#003366',
-    borderWidth: 1, // Add border for outline style
+    borderWidth: 1, 
   },
   errorText: {
     color: 'red',

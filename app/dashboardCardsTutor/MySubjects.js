@@ -6,7 +6,7 @@ import { useRouter } from 'expo-router';
 export default function MySubjects() {
   const router = useRouter();
 
-  // Sample data for subjects
+  
   const subjects = [
     { id: '1', name: 'Mathematics', description: 'Basic and advanced math concepts' },
     { id: '2', name: 'Physics', description: 'Mechanics, thermodynamics, and more' },
@@ -15,7 +15,7 @@ export default function MySubjects() {
 
   return (
     <View style={styles.container}>
-      {/* Header Section */}
+     
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
           <Ionicons name="arrow-back" size={24} color="#003366" />
@@ -23,7 +23,7 @@ export default function MySubjects() {
         <Text style={styles.headerTitle}>My Subjects</Text>
       </View>
 
-      {/* Subjects List */}
+     
       <FlatList
         data={subjects}
         keyExtractor={(item) => item.id}

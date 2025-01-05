@@ -41,7 +41,7 @@ const SubjectTutorsPage = () => {
       if (tutorIds.length > 0) {
         const { data: tutorDetails, error: tutorError } = await supabase
           .from('tutors')
-          .select('tutor_id, user_id') // Remove 'rating' field
+          .select('tutor_id, user_id') 
         if (tutorError) throw tutorError;
   
         const userIds = tutorDetails.map(item => item.user_id);
@@ -57,7 +57,7 @@ const SubjectTutorsPage = () => {
             tutor_id: tutor.tutor_id,
             full_name: userDetails.find((user) => user.id === tutor.user_id).full_name,
             email: userDetails.find((user) => user.id === tutor.user_id).email,
-            rating: 0, // Set rating to 0 since there's no rating field
+            rating: 0, 
           }));
   
           setTutors(formattedTutors);
@@ -135,7 +135,7 @@ const SubjectTutorsPage = () => {
                 <View key={index} style={styles.tutorCard}>
                   <Text style={styles.tutorName}>{tutor.full_name}</Text>
                   <Text style={styles.tutorEmail}>{tutor.email}</Text>
-                  {renderRating(tutor.rating)} {/* Display rating */}
+                  {renderRating(tutor.rating)} 
                   <TouchableOpacity
                     style={styles.viewProfileButton}
                     onPress={() => router.push(`/tutor-profile/${tutor.tutor_id}`)}

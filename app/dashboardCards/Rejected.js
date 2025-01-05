@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 const Rejected = () => {
   const navigation = useNavigation();
 
-  // Mock data for rejected sessions
+  
   const rejectedSessions = [
     { title: 'Chemistry Help', date: '2024-12-18' },
     { title: 'Math Tutoring', date: '2024-12-20' },

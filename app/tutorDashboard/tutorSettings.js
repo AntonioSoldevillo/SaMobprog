@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router'; // Import useRouter
+import { useRouter } from 'expo-router'; 
 import supabase from '../src/supabaseClient'; 
 
 export default function tutorSettings(){
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const router = useRouter(); // Initialize the router
+  const router = useRouter(); 
 
   const handleLogout = async () => {
     Alert.alert(
@@ -21,7 +21,7 @@ export default function tutorSettings(){
           text: "OK", 
           onPress: async () => {
             await supabase.auth.signOut();
-            router.push('/'); // Use router.push() for navigation
+            router.push('/'); 
           }
         }
       ]
@@ -34,65 +34,65 @@ export default function tutorSettings(){
 
   return (
     <View style={[styles.container, isDarkMode ? styles.darkContainer : styles.lightContainer]}>
-      {/* Header and Title */}
+      
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}> {/* Use router.back() for going back */}
+        <TouchableOpacity onPress={() => router.back()}> 
           <Ionicons name="arrow-back" size={24} color="#003366" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Settings</Text>
       </View>
 
-      {/* Scrollable Content */}
+      
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Language Section */}
+        
         <View style={styles.settingSection}>
           <Text style={styles.optionText}>Language</Text>
           <Ionicons name="chevron-forward" size={20} color="#003366" />
         </View>
 
-        {/* Profile Picture Section */}
+        
         <View style={styles.settingSection}>
           <Text style={styles.optionText}>Profile Picture</Text>
           <Ionicons name="chevron-forward" size={20} color="#003366" />
         </View>
 
-        {/* Account Settings Section */}
+       
         <View style={styles.settingSection}>
           <Text style={styles.optionText}>Account Settings</Text>
           <Ionicons name="chevron-forward" size={20} color="#003366" />
         </View>
 
-        {/* Security Settings Section */}
+        
         <View style={styles.settingSection}>
           <Text style={styles.optionText}>Security</Text>
           <Ionicons name="chevron-forward" size={20} color="#003366" />
         </View>
 
-        {/* Privacy Section */}
+        
         <View style={styles.settingSection}>
           <Text style={styles.optionText}>Privacy</Text>
           <Ionicons name="chevron-forward" size={20} color="#003366" />
         </View>
 
-        {/* Feedback Section */}
+        
         <View style={styles.settingSection}>
           <Text style={styles.optionText}>Feedback</Text>
           <Ionicons name="chevron-forward" size={20} color="#003366" />
         </View>
 
-        {/* Notifications Section */}
+        
         <View style={styles.settingSection}>
           <Text style={styles.optionText}>Notifications</Text>
           <Ionicons name="chevron-forward" size={20} color="#003366" />
         </View>
 
-        {/* Schedule Management Section (Specific for Tutors) */}
+        
         <View style={styles.settingSection}>
           <Text style={styles.optionText}>Manage Schedule</Text>
           <Ionicons name="chevron-forward" size={20} color="#003366" />
         </View>
 
-        {/* Logout Section */}
+      
         <TouchableOpacity style={styles.settingSection} onPress={handleLogout}>
           <Text style={styles.optionText}>Log Out</Text>
           <Ionicons name="chevron-forward" size={20} color="#003366" />

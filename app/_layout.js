@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import { Stack } from "expo-router"; // Use expo-router for navigation
+import { Stack } from "expo-router"; 
 
 export default function _layout() {
   return (

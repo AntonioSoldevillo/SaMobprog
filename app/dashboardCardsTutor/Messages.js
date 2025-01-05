@@ -6,7 +6,7 @@ import { useRouter } from 'expo-router';
 export default function Messages() {
   const router = useRouter();
 
-  // Sample data for messages
+  
   const messages = [
     { id: '1', sender: 'John Doe', message: 'Hello, I need help with math.', time: '2:30 PM' },
     { id: '2', sender: 'Jane Smith', message: 'Can we reschedule our session?', time: '1:15 PM' },
@@ -15,7 +15,7 @@ export default function Messages() {
 
   return (
     <View style={styles.container}>
-      {/* Header Section */}
+    
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
           <Ionicons name="arrow-back" size={24} color="#003366" />
@@ -23,7 +23,7 @@ export default function Messages() {
         <Text style={styles.headerTitle}>Messages</Text>
       </View>
 
-      {/* Messages List */}
+      
       <FlatList
         data={messages}
         keyExtractor={(item) => item.id}

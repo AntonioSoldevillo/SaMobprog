@@ -77,7 +77,7 @@ const BookingsInfo = () => {
     </View>
   );
 
-  // Back navigation logic
+ 
   const handleBackPress = () => {
     router.back();
   };
@@ -85,7 +85,7 @@ const BookingsInfo = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        {/* Back button with Ionicons */}
+        
         <Ionicons
           name="arrow-back"
           size={24}
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   backButton: {
-    marginRight: 15, // Space between back icon and the title
+    marginRight: 15, 
   },
   headerTitle: {
     flex: 1,
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   bookingStatus: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#008000', // Green color for status
+    color: '#008000', 
     marginTop: 5,
   },
 });

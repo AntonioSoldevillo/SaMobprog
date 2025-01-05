@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 const TopTutors = () => {
   const navigation = useNavigation();
 
-  // Mock data for 20 tutors
+  
   const tutors = [
     'Dr. John Doe', 'Prof. Jane Smith', 'Dr. Richard Lee', 'Prof. Emily Clark', 
     'Dr. Michael Brown', 'Prof. Sarah Wilson', 'Dr. Jason Miller', 'Prof. Olivia Johnson',
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   },
   tutorsContainer: {
     marginTop: 20,
-    paddingBottom: 20, // To ensure content is not cut off
+    paddingBottom: 20, 
   },
   tutorCard: {
     backgroundColor: '#fff',

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router'; // Import useRouter from Expo Router
+import { useRouter } from 'expo-router'; 
 import supabase from '../src/supabaseClient';
 
 export default function TutorDash() {
   const [userData, setUserData] = useState({ name: '', email: '' });
-  const router = useRouter(); // Initialize the router
+  const router = useRouter(); 
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -34,7 +34,7 @@ export default function TutorDash() {
 
   return (
     <View style={styles.container}>
-      {/* Header Section */}
+      
       <View style={styles.header}>
         <Text style={styles.logoText}>
           <Text style={styles.logoPrimary}>Tutor</Text>
@@ -43,7 +43,7 @@ export default function TutorDash() {
         <Ionicons name="notifications-outline" size={28} color="#003366" />
       </View>
 
-      {/* User Info Section */}
+      
       <View style={styles.userInfo}>
         <Image
           source={require('../pics/oliver.png')}
@@ -53,36 +53,36 @@ export default function TutorDash() {
         <Text style={styles.userEmail}>{userData.email}</Text>
       </View>
 
-      {/* Tutor Sessions Section */}
+    
       <Text style={styles.sectionTitle}>Tutor Sessions</Text>
 
-      {/* Cards */}
+     
       <View style={styles.cardsRow}>
-        {/* My Subjects Card */}
+        
         <TouchableOpacity
           style={styles.card}
-          onPress={() => router.push('/dashboardCardsTutor/MySubjects')} // Navigate to MySubjectsDashboard
+          onPress={() => router.push('/dashboardCardsTutor/MySubjects')} 
         >
           <Ionicons name="book" size={32} color="#003366" />
           <Text style={styles.cardTitle}>My Subjects</Text>
         </TouchableOpacity>
 
-        {/* Messages Card */}
+        
         <TouchableOpacity
           style={styles.card}
-          onPress={() => router.push('/dashboardCardsTutor/Messages')} // Navigate to TutorMessage
+          onPress={() => router.push('/dashboardCardsTutor/Messages')} 
         >
           <Ionicons name="chatbubble-ellipses-outline" size={32} color="#003366" />
           <Text style={styles.cardTitle}>Messages</Text>
-          <Text style={styles.cardCount}>3</Text> {/* Adjust the count dynamically */}
+          <Text style={styles.cardCount}>3</Text> 
         </TouchableOpacity>
       </View>
 
-      {/* Booking Request Card */}
+    
       <View style={styles.cardsContainer}>
         <TouchableOpacity
           style={styles.card}
-          onPress={() => router.push('/dashboardCardsTutor/BookingRequest')} // Navigate to Pending
+          onPress={() => router.push('/dashboardCardsTutor/BookingRequest')} 
         >
           <MaterialIcons name="pending-actions" size={32} color="#003366" />
           <Text style={styles.cardTitle}>Booking Request</Text>

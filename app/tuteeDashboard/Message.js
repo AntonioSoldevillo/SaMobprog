@@ -35,13 +35,13 @@ const MessagePage = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        {/* Back button with Ionicons */}
+        
         <Ionicons
           name="arrow-back"
           size={24}
           color="#003366"
           style={styles.backButton}
-          onPress={() => router.back()} // Simple back navigation
+          onPress={() => router.back()} 
         />
         <Text style={styles.headerTitle}>Messages</Text>
       </View>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   backButton: {
-    marginRight: 15, // Space between back icon and the title
+    marginRight: 15, 
   },
   headerTitle: {
     flex: 1,

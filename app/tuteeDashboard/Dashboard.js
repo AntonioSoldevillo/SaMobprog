@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
 import { MaterialIcons, Ionicons, FontAwesome } from '@expo/vector-icons';
-import { useRouter } from 'expo-router'; // Import useRouter
+import { useRouter } from 'expo-router'; 
 import supabase from '../src/supabaseClient';
 
 const Dashboard = () => {
   const [userName, setUserName] = useState('');
-  const router = useRouter(); // Initialize useRouter
+  const router = useRouter(); 
 
-  // Fetch user name
+ 
   useEffect(() => {
     const fetchUserName = async () => {
       try {
         const { data: { user }, error: userError } = await supabase.auth.getUser();
         if (userError) throw userError;
 
-        const userId = user.id; // Supabase user ID
+        const userId = user.id; 
 
         const { data: userData, error: queryError } = await supabase
           .from('users')
@@ -59,7 +59,7 @@ const Dashboard = () => {
 
       <Text style={styles.sectionTitle}>Tutor Sessions</Text>
       <View style={styles.cardsContainer}>
-        {/* First Row of Cards */}
+        
         <View style={styles.cardRow}>
           <TouchableOpacity style={styles.card} onPress={() => router.push('/dashboardCards/bookingInfo')}>
             <MaterialIcons name="pending-actions" size={32} color="#003366" />
@@ -78,7 +78,7 @@ const Dashboard = () => {
 </TouchableOpacity>
         </View>
 
-        {/* Second Row of Cards */}
+       
         <View style={styles.cardRow}>
         <TouchableOpacity style={styles.card} onPress={() => router.push('/dashboardCards/Rejected')}>
   <MaterialIcons name="cancel" size={32} color="#003366" />

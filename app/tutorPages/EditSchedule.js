@@ -6,12 +6,12 @@ import supabase from '../src/supabaseClient';
 
 const EditSchedule = () => {
   const router = useRouter();
-  const { schedule_id, availability_date_time } = useLocalSearchParams(); // Get params using Expo Router
+  const { schedule_id, availability_date_time } = useLocalSearchParams(); 
 
   // Convert the initial availability_date_time to a string format
-  const initialDateTime = new Date(decodeURIComponent(availability_date_time)).toISOString().slice(0, 19); // ISO string format (YYYY-MM-DDTHH:MM:SS)
+  const initialDateTime = new Date(decodeURIComponent(availability_date_time)).toISOString().slice(0, 19); 
 
-  const [newDateTime, setNewDateTime] = useState(initialDateTime); // Store the date/time as a string
+  const [newDateTime, setNewDateTime] = useState(initialDateTime); 
   const [loading, setLoading] = useState(false);
 
   // Save the updated schedule to the database
@@ -26,13 +26,13 @@ const EditSchedule = () => {
     try {
       const { error } = await supabase
         .from('schedule')
-        .update({ availability_date_time: new Date(newDateTime).toISOString() }) // Save as ISO string
+        .update({ availability_date_time: new Date(newDateTime).toISOString() }) 
         .eq('schedule_id', schedule_id);
 
       if (error) throw error;
 
       Alert.alert('Success', 'Schedule updated successfully');
-      router.push('tutorDashboard/TutorDash'); // Navigate to TutorDash after saving
+      router.push('tutorDashboard/TutorDash'); 
     } catch (error) {
       Alert.alert('Error', error.message);
     } finally {
@@ -42,12 +42,12 @@ const EditSchedule = () => {
 
   // Handle text change in the input field
   const handleChange = (text) => {
-    setNewDateTime(text); // Update the state with the new input
+    setNewDateTime(text); 
   };
 
   return (
     <View style={styles.container}>
-      {/* Back Button and Title in a Row */}
+     
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color="#003366" />
@@ -58,12 +58,12 @@ const EditSchedule = () => {
       <Text style={styles.label}>Availability Date and Time</Text>
       <TextInput
         style={styles.input}
-        value={newDateTime} // Use the string format for date/time
-        onChangeText={handleChange} // Allow manual text input for date/time
+        value={newDateTime} 
+        onChangeText={handleChange} 
         placeholder="Enter date and time (YYYY-MM-DDTHH:MM:SS)"
       />
 
-      {/* Loading Indicator or Save Button */}
+      {/* Loading Indicator*/}
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (

@@ -20,7 +20,7 @@ export default function Profile() {
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {/* Profile Section */}
+       
         <View style={styles.profileSection}>
           <Image
             source={require('../pics/profile.jpg')}
@@ -30,7 +30,7 @@ export default function Profile() {
           <Text style={styles.email}>antonio.soldevillo@example.com</Text>
         </View>
 
-        {/* Bio Section */}
+      
         <View style={styles.bioSection}>
           <Text style={styles.bioTitle}>Bio</Text>
           <Text style={styles.bioText}>
@@ -38,20 +38,20 @@ export default function Profile() {
           </Text>
         </View>
 
-        {/* Upcoming Sessions */}
+        
         <View style={styles.sessionsSection}>
           <Text style={styles.sessionsTitle}>Upcoming Sessions</Text>
           <Text style={styles.sessionItem}>Math 101 - 12/12/2024 - 10:00 AM</Text>
           <Text style={styles.sessionItem}>Physics 102 - 12/14/2024 - 2:00 PM</Text>
         </View>
 
-        {/* Ratings Section */}
+      
         <View style={styles.ratingsSection}>
           <Text style={styles.ratingsTitle}>Ratings</Text>
           <Text style={styles.ratingsText}>4.5/5 (Based on 10 reviews)</Text>
         </View>
 
-        {/* Additional Info */}
+        
         <View style={styles.infoSection}>
           <Text style={styles.infoTitle}>Tutee Information</Text>
           <Text style={styles.infoItem}>Enrolled Subjects: 5</Text>

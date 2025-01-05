@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 import { Button } from 'react-native-paper';
-import { Ionicons } from '@expo/vector-icons'; // For eye icon
-import { useRouter } from 'expo-router'; // For navigation
+import { Ionicons } from '@expo/vector-icons'; 
+import { useRouter } from 'expo-router'; 
 import RNPickerSelect from 'react-native-picker-select';
 import supabase from './src/supabaseClient';
 
 export default function signUp() {
-  const router = useRouter(); // Using useRouter for navigation
+  const router = useRouter(); 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
@@ -16,7 +16,7 @@ export default function signUp() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSignUp = async () => {
-    setIsLoading(true); // Show loading indicator
+    setIsLoading(true); 
     try {
       const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email,
@@ -175,7 +175,7 @@ export default function signUp() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex:1,
     padding: 20,
     justifyContent: 'center',
     backgroundColor: '#fff',

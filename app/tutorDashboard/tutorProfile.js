@@ -2,20 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; 
 import { useRouter } from 'expo-router';
-import * as ImagePicker from 'expo-image-picker'; // Use Expo Image Picker for permissions and picking
-import supabase from '../src/supabaseClient'; // Make sure to import your Supabase client
+import * as ImagePicker from 'expo-image-picker'; 
+import supabase from '../src/supabaseClient'; 
 
 export default function TutorProfile() {
   const [profileImage, setProfileImage] = useState(null);
-  const [userInfo, setUserInfo] = useState({}); // For storing user info
+  const [userInfo, setUserInfo] = useState({}); 
   const router = useRouter();
 
-  // Default image URL
+ 
   const defaultProfileImage = require('../pics/oliver.png');
 
   // Fetch user profile picture from Supabase
   const fetchUserProfile = async () => {
-    const user = supabase.auth.user(); // Get the current logged-in user
+    const user = supabase.auth.user(); 
     if (user) {
       try {
         const { data, error } = await supabase
@@ -25,9 +25,9 @@ export default function TutorProfile() {
           .single();
 
         if (data && data.image_url) {
-          setProfileImage({ uri: data.image_url }); // Set the image URL from Supabase
+          setProfileImage({ uri: data.image_url }); 
         } else {
-          setProfileImage(defaultProfileImage); // Set default image if no profile picture exists
+          setProfileImage(defaultProfileImage); 
         }
       } catch (error) {
         console.error("Error fetching profile image:", error);
@@ -49,12 +49,12 @@ export default function TutorProfile() {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       quality: 1,
       allowsEditing: true,
-      aspect: [1, 1], // Optional: makes the image square
+      aspect: [1, 1], 
     });
 
     if (!result.cancelled) {
       const selectedUri = result.uri;
-      setProfileImage({ uri: selectedUri }); // Temporarily set selected image
+      setProfileImage({ uri: selectedUri }); 
 
       // Upload image to Supabase storage
       const user = supabase.auth.user();
@@ -63,7 +63,7 @@ export default function TutorProfile() {
         const fileName = `${user.id}_profile.${fileExt}`;
 
         const { data, error: uploadError } = await supabase.storage
-          .from('profile_pics') // 'profile_pics' is your Supabase storage bucket
+          .from('profile_pics') 
           .upload(fileName, selectedUri, {
             contentType: 'image/*',
           });
@@ -97,8 +97,8 @@ export default function TutorProfile() {
   };
 
   useEffect(() => {
-    requestPermissions(); // Request permissions when the component mounts
-    fetchUserProfile(); // Fetch the user's profile picture
+    requestPermissions(); 
+    fetchUserProfile(); 
   }, []);
 
   return (
@@ -118,7 +118,7 @@ export default function TutorProfile() {
           <Text style={styles.name}>Oliver Smith</Text>
           <Text style={styles.subject}>Math Tutor</Text>
           
-          {/* Upload Profile Button */}
+          
           <TouchableOpacity style={styles.uploadButton} onPress={pickImage}>
             <Text style={styles.uploadButtonText}>Upload Profile</Text>
           </TouchableOpacity>

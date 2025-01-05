@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, FlatList, TouchableOpacity, Alert } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // For back arrow icon
+import { Ionicons } from '@expo/vector-icons'; 
 import supabase from '../src/supabaseClient';
-import { useRouter } from 'expo-router'; // Correct import for expo-router
+import { useRouter } from 'expo-router'; 
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 const SchedulePage = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { tutorId } = route.params; // Access tutorId from route.params
+  const { tutorId } = route.params; 
   const [schedules, setSchedules] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter(); // Initialize router
+  const router = useRouter(); 
 
-  // Fetch schedules for the tutor
+  
   const fetchSchedules = async () => {
     try {
       const { data, error } = await supabase
@@ -132,7 +132,7 @@ const SchedulePage = () => {
         console.error('Insert Error:', error.message);
       } else {
         Alert.alert('Success', 'Your booking has been confirmed!');
-        router.push('/tuteeDashboard/Dashboard');  // Correct navigation using expo-router
+        router.push('/tuteeDashboard/Dashboard');  
       }
     } catch (err) {
       Alert.alert('Error', 'An unexpected error occurred.');

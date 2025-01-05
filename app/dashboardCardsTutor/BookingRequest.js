@@ -6,7 +6,7 @@ import { useRouter } from 'expo-router';
 export default function BookingRequest() {
   const router = useRouter();
 
-  // Sample data for booking requests
+  
   const bookingRequests = [
     { id: '1', tutee: 'John Doe', subject: 'Mathematics', date: 'Jan 5, 2024', time: '2:00 PM' },
     { id: '2', tutee: 'Jane Smith', subject: 'Physics', date: 'Jan 6, 2024', time: '10:00 AM' },
@@ -15,7 +15,7 @@ export default function BookingRequest() {
 
   return (
     <View style={styles.container}>
-      {/* Header Section */}
+      
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
           <Ionicons name="arrow-back" size={24} color="#003366" />
@@ -23,7 +23,6 @@ export default function BookingRequest() {
         <Text style={styles.headerTitle}>Booking Requests</Text>
       </View>
 
-      {/* Booking Requests List */}
       <FlatList
         data={bookingRequests}
         keyExtractor={(item) => item.id}
